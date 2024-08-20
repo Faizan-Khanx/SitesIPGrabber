@@ -44,8 +44,9 @@ python3 FaizanSitesIPGrabber.py <sites.txt>
 
 # Feedback
 - If you have any feedback, please reach out to us at
--  instagram.com/ethicalfaizan
--  github.com/faizan-khanx 
--  fk776794@gmail.com
+-  [INSTAGRAM](https://instagram.com/ethicalfaizan)
+-  [GITHUB](https://github.com/faizan-khanx)
+-  [EMAIL](mailto:fk776794@gmail.com)
+  
 
 
