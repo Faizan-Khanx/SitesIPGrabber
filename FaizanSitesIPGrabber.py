@@ -10,8 +10,9 @@ init(autoreset=True)
 fr = Fore.RED
 fg = Fore.GREEN
 
+
 print("""
-[#] Create By ::
+[#] Created By ::
 
     _____   ____  ____  _____   ____  ____       ______   ___    ___   _      _____
 |     | /    Tl    j|     T /    T|    \     |      T /   \  /   \ | T    / ___/
@@ -31,28 +32,25 @@ try:
 except IndexError:
     path = str(sys.argv[0]).split('\\')
     sys.exit('\n  [!] Enter <' + path[len(path) - 1] + '> <sites.txt>')
+except FileNotFoundError:
+    sys.exit(f'\n  [!] File not found: {sys.argv[1]}')
 
 
 def domain(site):
-    site = re.sub(r'^https?://|www\.|\/.*$', '', site)
-    return site
+    return re.sub(r'^https?://|www\.|\/.*$', '', site)
 
 
-def getIP(url):
+def get_IP(url):
+    dom = domain(url)
     try:
-        dom = domain(url)
-        try:
-            ip = socket.gethostbyname(dom)
-            print(' -| ' + url + ' --> {}[{}]'.format(fg, ip))
-            with open('FaizanIPs.txt', 'a') as f:
-                f.write(ip + '\n')
-        except socket.error:
-            print(' -| ' + url + ' --> {}[DomainNotWork]'.format(fr))
+        ip = socket.gethostbyname(dom)
+        print(f' -| {url} --> {fg}[{ip}]')
+        with open('FaizanIPs.txt', 'a') as f:
+            f.write(ip + '\n')
+    except socket.gaierror:
+        print(f' -| {url} --> {fr}[DomainNotWork]')
     except Exception as e:
-        print(' -| ' + url + ' --> {}[DomainNotWork] - {}'.format(fr, str(e)))
+        print(f' -| {url} --> {fr}[Error] - {str(e)}')
 
-
-mp = Pool(150)
-mp.map(getIP, target)
-mp.close()
-mp.join()
+with Pool(150) as pool:
+    pool.map(get_ip, target)
